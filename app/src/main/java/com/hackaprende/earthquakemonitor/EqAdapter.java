@@ -33,6 +33,16 @@ class EqAdapter extends ListAdapter<Earthquake, EqAdapter.EqViewHolder> {
         super(DIFF_CALLBACK);
     }
 
+    private OnItemClickListener onItemClickListener;
+
+    interface OnItemClickListener {
+        void onItemClick(Earthquake earthquake);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     @NonNull
     @Override
     public EqAdapter.EqViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,6 +69,10 @@ class EqAdapter extends ListAdapter<Earthquake, EqAdapter.EqViewHolder> {
         public void bind(Earthquake earthquake) {
             binding.magnitudeText.setText(String.valueOf(earthquake.getMagnitude()));
             binding.placeText.setText(earthquake.getPlace());
+
+            binding.getRoot().setOnClickListener( v -> {
+                onItemClickListener.onItemClick(earthquake);
+            });
 
             binding.executePendingBindings();
         }

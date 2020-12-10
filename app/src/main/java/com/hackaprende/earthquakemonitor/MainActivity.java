@@ -1,6 +1,7 @@
 package com.hackaprende.earthquakemonitor;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         eqList.add(new Earthquake("6g4vwerf2", "Caracas", 0.7, 2361278687L, 105.23, 98.127));
 
         EqAdapter adapter = new EqAdapter();
+        adapter.setOnItemClickListener(earthquake ->
+                Toast.makeText(MainActivity.this, earthquake.getPlace(),
+                        Toast.LENGTH_SHORT).show());
+
         binding.eqRecycler.setAdapter(adapter);
         adapter.submitList(eqList);
     }
