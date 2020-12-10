@@ -1,5 +1,7 @@
 package com.hackaprende.earthquakemonitor;
 
+import java.util.Objects;
+
 class Earthquake {
 
     private String id;
@@ -40,5 +42,23 @@ class Earthquake {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Earthquake that = (Earthquake) o;
+        return Double.compare(that.magnitude, magnitude) == 0 &&
+                time == that.time &&
+                Double.compare(that.latitude, latitude) == 0 &&
+                Double.compare(that.longitude, longitude) == 0 &&
+                id.equals(that.id) &&
+                place.equals(that.place);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, place, magnitude, time, latitude, longitude);
     }
 }

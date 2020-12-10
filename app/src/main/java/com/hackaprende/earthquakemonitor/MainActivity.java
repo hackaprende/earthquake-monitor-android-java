@@ -25,5 +25,9 @@ public class MainActivity extends AppCompatActivity {
         eqList.add(new Earthquake("3dqwecads", "Lima", 1.6, 2361278687L, 105.23, 98.127));
         eqList.add(new Earthquake("4445vwerv", "Madrid", 3.2, 2361278687L, 105.23, 98.127));
         eqList.add(new Earthquake("6g4vwerf2", "Caracas", 0.7, 2361278687L, 105.23, 98.127));
+
+        EqAdapter adapter = new EqAdapter();
+        binding.eqRecycler.setAdapter(adapter);
+        adapter.submitList(eqList);
     }
 }
