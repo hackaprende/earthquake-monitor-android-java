@@ -1,14 +1,14 @@
 package com.hackaprende.earthquakemonitor;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hackaprende.earthquakemonitor.databinding.EqListItemBinding;
 
 class EqAdapter extends ListAdapter<Earthquake, EqAdapter.EqViewHolder> {
 
@@ -36,9 +36,8 @@ class EqAdapter extends ListAdapter<Earthquake, EqAdapter.EqViewHolder> {
     @NonNull
     @Override
     public EqAdapter.EqViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.eq_list_item, parent,
-                false);
-        return new EqViewHolder(view);
+        EqListItemBinding binding = EqListItemBinding.inflate(LayoutInflater.from(parent.getContext()));
+        return new EqViewHolder(binding);
     }
 
     @Override
@@ -50,19 +49,18 @@ class EqAdapter extends ListAdapter<Earthquake, EqAdapter.EqViewHolder> {
 
     class EqViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView magnitudeText;
-        private TextView placeText;
+        private final EqListItemBinding binding;
 
-        public EqViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            magnitudeText = itemView.findViewById(R.id.magnitude_text);
-            placeText = itemView.findViewById(R.id.place_text);
+        public EqViewHolder(@NonNull EqListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bind(Earthquake earthquake) {
-            magnitudeText.setText(String.valueOf(earthquake.getMagnitude()));
-            placeText.setText(earthquake.getPlace());
+            binding.magnitudeText.setText(String.valueOf(earthquake.getMagnitude()));
+            binding.placeText.setText(earthquake.getPlace());
+
+            binding.executePendingBindings();
         }
     }
 }
