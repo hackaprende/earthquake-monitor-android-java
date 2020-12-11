@@ -1,6 +1,7 @@
 package com.hackaprende.earthquakemonitor;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,5 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         binding.eqRecycler.setAdapter(adapter);
         adapter.submitList(eqList);
+
+        if (eqList.isEmpty()) {
+            binding.emptyView.setVisibility(View.VISIBLE);
+        } else {
+            binding.emptyView.setVisibility(View.GONE);
+        }
     }
 }
