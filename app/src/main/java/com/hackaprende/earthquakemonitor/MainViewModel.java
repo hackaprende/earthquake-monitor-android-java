@@ -1,11 +1,18 @@
 package com.hackaprende.earthquakemonitor;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
+import com.hackaprende.earthquakemonitor.api.EqApiClient;
+
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainViewModel extends ViewModel {
 
@@ -16,13 +23,20 @@ public class MainViewModel extends ViewModel {
     }
 
     public void getEarthquakes() {
-        ArrayList<Earthquake> eqList = new ArrayList<>();
-        eqList.add(new Earthquake("casdnciao", "Buenos Aires", 5.0, 2361278687L, 105.23, 98.127));
-        eqList.add(new Earthquake("asdcecedc", "Ciudad de México", 4.0, 2361278687L, 105.23, 98.127));
-        eqList.add(new Earthquake("3dqwecads", "Lima", 1.6, 2361278687L, 105.23, 98.127));
-        eqList.add(new Earthquake("4445vwerv", "Madrid", 3.2, 2361278687L, 105.23, 98.127));
-        eqList.add(new Earthquake("6g4vwerf2", "Caracas", 0.7, 2361278687L, 105.23, 98.127));
+        EqApiClient.EqService service = EqApiClient.getInstance().getService();
 
-        this.eqList.setValue(eqList);
+        service.getEarthquakes().enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d("MainViewModel", response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+        // this.eqList.setValue(eqList);
     }
 }
