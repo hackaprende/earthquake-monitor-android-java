@@ -4,6 +4,7 @@ import com.hackaprende.earthquakemonitor.Earthquake;
 import com.hackaprende.earthquakemonitor.api.EarthquakeJSONResponse;
 import com.hackaprende.earthquakemonitor.api.EqApiClient;
 import com.hackaprende.earthquakemonitor.api.Feature;
+import com.hackaprende.earthquakemonitor.database.EqDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,12 @@ class MainRepository {
 
     public interface DownloadEqsListener {
         void onEqsDownloaded(List<Earthquake> earthquakeList);
+    }
+
+    private EqDatabase database;
+
+    public MainRepository(EqDatabase database) {
+        this.database = database;
     }
 
     public void getEarthquakes(DownloadEqsListener downloadEqsListener) {
