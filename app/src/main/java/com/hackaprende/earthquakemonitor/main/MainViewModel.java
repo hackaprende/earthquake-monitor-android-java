@@ -1,8 +1,10 @@
-package com.hackaprende.earthquakemonitor;
+package com.hackaprende.earthquakemonitor.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.hackaprende.earthquakemonitor.Earthquake;
 
 import java.util.List;
 

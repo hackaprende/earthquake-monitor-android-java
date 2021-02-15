@@ -2,7 +2,7 @@ package com.hackaprende.earthquakemonitor;
 
 import java.util.Objects;
 
-class Earthquake {
+public class Earthquake {
 
     private String id;
     private String place;

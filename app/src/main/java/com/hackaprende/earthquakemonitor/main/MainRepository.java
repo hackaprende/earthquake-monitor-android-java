@@ -1,5 +1,6 @@
-package com.hackaprende.earthquakemonitor;
+package com.hackaprende.earthquakemonitor.main;
 
+import com.hackaprende.earthquakemonitor.Earthquake;
 import com.hackaprende.earthquakemonitor.api.EarthquakeJSONResponse;
 import com.hackaprende.earthquakemonitor.api.EqApiClient;
 import com.hackaprende.earthquakemonitor.api.Feature;

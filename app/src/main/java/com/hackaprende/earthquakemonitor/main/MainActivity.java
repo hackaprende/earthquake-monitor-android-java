@@ -1,4 +1,4 @@
-package com.hackaprende.earthquakemonitor;
+package com.hackaprende.earthquakemonitor.main;
 
 import android.os.Bundle;
 import android.view.View;
