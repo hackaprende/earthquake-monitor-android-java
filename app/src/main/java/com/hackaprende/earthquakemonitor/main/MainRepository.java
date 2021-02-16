@@ -1,5 +1,7 @@
 package com.hackaprende.earthquakemonitor.main;
 
+import androidx.lifecycle.LiveData;
+
 import com.hackaprende.earthquakemonitor.Earthquake;
 import com.hackaprende.earthquakemonitor.api.EarthquakeJSONResponse;
 import com.hackaprende.earthquakemonitor.api.EqApiClient;
@@ -15,24 +17,27 @@ import retrofit2.Response;
 
 class MainRepository {
 
-    public interface DownloadEqsListener {
-        void onEqsDownloaded(List<Earthquake> earthquakeList);
-    }
-
-    private EqDatabase database;
+    private final EqDatabase database;
 
     public MainRepository(EqDatabase database) {
         this.database = database;
     }
 
-    public void getEarthquakes(DownloadEqsListener downloadEqsListener) {
+    public LiveData<List<Earthquake>> getEqList() {
+        return database.eqDao().getEarthquakes();
+    }
+
+    public void downloadAndSaveEarthquakes() {
         EqApiClient.EqService service = EqApiClient.getInstance().getService();
 
         service.getEarthquakes().enqueue(new Callback<EarthquakeJSONResponse>() {
             @Override
             public void onResponse(Call<EarthquakeJSONResponse> call, Response<EarthquakeJSONResponse> response) {
                 List<Earthquake> earthquakeList = getEarthquakesWithMoshi(response.body());
-                downloadEqsListener.onEqsDownloaded(earthquakeList);
+
+                EqDatabase.databaseWriteExecutor.execute(() -> {
+                    database.eqDao().insertAll(earthquakeList);
+                });
             }
 
             @Override

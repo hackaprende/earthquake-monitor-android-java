@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.hackaprende.earthquakemonitor.Earthquake;
 import com.hackaprende.earthquakemonitor.database.EqDatabase;
@@ -15,7 +14,6 @@ import java.util.List;
 public class MainViewModel extends AndroidViewModel {
 
     private final MainRepository repository;
-    private final MutableLiveData<List<Earthquake>> eqList = new MutableLiveData<>();
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -24,12 +22,10 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Earthquake>> getEqList() {
-        return eqList;
+        return repository.getEqList();
     }
 
-    public void getEarthquakes() {
-        repository.getEarthquakes(earthquakeList -> {
-            eqList.setValue(earthquakeList);
-        });
+    public void downloadEarthquakes() {
+        repository.downloadAndSaveEarthquakes();
     }
 }

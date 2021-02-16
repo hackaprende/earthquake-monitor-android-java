@@ -40,6 +40,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getEarthquakes();
+        viewModel.downloadEarthquakes();
     }
 }
